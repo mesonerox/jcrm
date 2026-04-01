@@ -1,0 +1,6 @@
+{
+  "name": "@crossmint-crm/slack-bot",
+  "version": "0.1.0",
+  "description": "Slack bot for Crossmint CRM",
+  "private": true
+}
