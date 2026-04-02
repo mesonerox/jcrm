@@ -10,6 +10,8 @@
 
 This is a purpose-built revenue intelligence system for Crossmint's go-to-market team — not a CRM configuration, but a full-stack AI system designed around Crossmint's actual product surface, ICP, and operational reality. This statement maps directly to three concrete engineering problems: an inbound qualification bottleneck that lets leads go cold, a structurally absent outbound motion with no personalization infrastructure, and a BD operations layer that doesn't yet have AI as a force multiplier.
 
+![BD Intelligence Dashboard](https://github.com/user-attachments/assets/e2fea2a6-738f-4115-98fd-be5e7e889ff8)
+
 ---
 
 ## The Problem
@@ -357,6 +359,8 @@ Five workflows, all imported and active at `localhost:5678`. Workflows are in `n
 
 **Output:** Twenty record + Slack card with actionable routing.
 
+![Workflow 1 — Inbound Qualification](https://github.com/user-attachments/assets/77d614ba-36e0-4f31-ae34-9ba815dc90e1)
+
 ---
 
 ### Workflow 2: Outbound Sequence Engine
@@ -368,6 +372,8 @@ Five workflows, all imported and active at `localhost:5678`. Workflows are in `n
 **Claude involvement:** Email personalization using company profile, segment, and relevant case study.
 
 **Output:** Gmail drafts queued for review + Slack preview thread.
+
+![Workflow 2 — Outbound Sequence](https://github.com/user-attachments/assets/00722953-896d-4b58-a2e3-4e2581fe85a0)
 
 ---
 
@@ -382,6 +388,8 @@ Five workflows, all imported and active at `localhost:5678`. Workflows are in `n
 **Claude involvement:** Threshold evaluation and action recommendation framing.
 
 **Output:** Updated Twenty records + conditional Slack alerts.
+
+![Workflow 3 — Account Health Monitor](https://github.com/user-attachments/assets/6996588a-b304-46d3-a7c0-a452383f1d50)
 
 ---
 
@@ -398,6 +406,8 @@ Five workflows, all imported and active at `localhost:5678`. Workflows are in `n
 
 **Output:** Automated downstream actions, zero manual data entry.
 
+![Workflow 4 — Deal Stage Automation](https://github.com/user-attachments/assets/31042881-9f3a-4489-ba11-3330e120e2a9)
+
 ---
 
 ### Workflow 5: Weekly Revenue Digest
@@ -409,6 +419,8 @@ Five workflows, all imported and active at `localhost:5678`. Workflows are in `n
 **Claude involvement:** Executive summary generation — not a data dump, a narrative with signal vs noise framing.
 
 **Output:** `#crm-digest` post with pipeline health, top risks, this week's wins, and Monday's priority actions.
+
+![Workflow 5 — Weekly Digest](https://github.com/user-attachments/assets/cd96be6c-0fbc-4350-b834-a7fa00e3673b)
 
 ---
 
