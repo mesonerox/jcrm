@@ -57,7 +57,7 @@ function deriveExpansionPotential(
   return "HIGH";
 }
 
-// ── Payload builder ───────────────────────────────────────────────────────────
+// ── Payload builders ──────────────────────────────────────────────────────────
 
 function buildCompanyPayload(account: Account): Record<string, unknown> {
   const url = account.domain.startsWith("https://")
@@ -70,6 +70,21 @@ function buildCompanyPayload(account: Account): Record<string, unknown> {
       primaryLinkUrl: url,
       primaryLinkLabel: "",
     },
+  };
+}
+
+function buildCustomFieldsPayload(account: Account): Record<string, unknown> {
+  return {
+    healthScore: account.healthScore,
+    monthlyApiCalls: account.monthlyApiCalls,
+    activeWalletCount: account.walletCount,
+    activeChainCount: account.activeChainCount,
+    estimatedArr: account.estimatedArr,
+    churnRisk: toSelectValue(account.churnRisk),
+    segment: toSelectValue(account.segment),
+    expansionPotential: deriveExpansionPotential(account),
+    lastProductActivity: new Date(account.lastProductActivity).toISOString(),
+    // icpNotes is RICH_TEXT — Twenty REST API does not support write operations on this type
   };
 }
 
@@ -104,20 +119,33 @@ async function lookupCompanyByName(name: string): Promise<string> {
   return match.id;
 }
 
+async function patchCustomFields(id: string, account: Account): Promise<void> {
+  await restRequest("PATCH", `/companies/${id}`, buildCustomFieldsPayload(account));
+}
+
 export async function upsertCompany(account: Account): Promise<string> {
   console.log(`  Creating company: ${account.name}`);
+  let id: string;
+
   try {
     const result = await restRequest<TwentyMutationResponse>(
       "POST",
       "/companies",
       buildCompanyPayload(account)
     );
-    return result.data.id;
+    id = result.data.id;
   } catch (err) {
     if (err instanceof Error && isDuplicateError(err.message)) {
       console.log(`  Company already exists, looking up ID: ${account.name}`);
-      return lookupCompanyByName(account.name);
+      id = await lookupCompanyByName(account.name);
+    } else {
+      throw err;
     }
-    throw err;
   }
+
+  // Step 2: PATCH custom health fields — idempotent, runs on both create and update paths
+  console.log(`  Patching custom fields for: ${account.name} (${id})`);
+  await patchCustomFields(id, account);
+
+  return id;
 }
