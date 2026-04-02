@@ -8,7 +8,7 @@
 ![Live & Functional](https://img.shields.io/badge/Status-Live%20%26%20Functional-22c55e?style=flat-square)
 ![Open Source Stack](https://img.shields.io/badge/Stack-100%25%20Open%20Source-3b82f6?style=flat-square)
 
-This is a purpose-built revenue intelligence system for Crossmint's go-to-market team — not a CRM configuration, but a full-stack AI system designed around Crossmint's actual product surface, ICP, and operational reality. It was built in response to a specific observation from Crossmint's Head of BD: *"Estamos inundados en inbound leads y estamos pasando demasiado tiempo calificando. Necesitamos un inbound SDR. No estamos haciendo mucho outbound y eso es problemático."* That single statement maps directly to three concrete engineering problems: an inbound qualification bottleneck that lets leads go cold, a structurally absent outbound motion with no personalization infrastructure, and a BD operations layer that doesn't yet have AI as a force multiplier.
+This is a purpose-built revenue intelligence system for Crossmint's go-to-market team — not a CRM configuration, but a full-stack AI system designed around Crossmint's actual product surface, ICP, and operational reality. This statement maps directly to three concrete engineering problems: an inbound qualification bottleneck that lets leads go cold, a structurally absent outbound motion with no personalization infrastructure, and a BD operations layer that doesn't yet have AI as a force multiplier.
 
 ---
 
