@@ -6,6 +6,12 @@ const API_KEY = process.env.NEXT_PUBLIC_TWENTY_API_KEY ?? "";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
+// Twenty REST API wraps collections in edges/node when using GraphQL,
+// but the REST endpoints return flat arrays: { data: { <object>s: T[] } }
+export type TwentyEdgesResponse<T> = {
+  data: { [key: string]: { edges: { node: T }[] } };
+};
+
 export interface TwentyCompany {
   id: string;
   name: string;
@@ -75,7 +81,7 @@ async function fetcher<T>(path: string): Promise<T> {
 export function useCompanies() {
   const { data, error, isLoading } = useSWR<{
     data: { companies: TwentyCompany[] };
-  }>("/companies", fetcher, { refreshInterval: 30_000 });
+  }>("/companies?orderBy=createdAt[descend]&first=100", fetcher, { refreshInterval: 30_000 });
 
   return {
     companies: data?.data?.companies ?? [],
@@ -87,7 +93,7 @@ export function useCompanies() {
 export function useInboundLeads() {
   const { data, error, isLoading } = useSWR<{
     data: { inboundLeads: TwentyInboundLead[] };
-  }>("/inboundLeads", fetcher, { refreshInterval: 30_000 });
+  }>("/inboundLeads?orderBy=createdAt[descend]&first=100", fetcher, { refreshInterval: 30_000 });
 
   return {
     inboundLeads: data?.data?.inboundLeads ?? [],
@@ -99,7 +105,7 @@ export function useInboundLeads() {
 export function useOpportunities() {
   const { data, error, isLoading } = useSWR<{
     data: { opportunities: TwentyOpportunity[] };
-  }>("/opportunities", fetcher, { refreshInterval: 30_000 });
+  }>("/opportunities?orderBy=createdAt[descend]&first=100", fetcher, { refreshInterval: 30_000 });
 
   return {
     opportunities: data?.data?.opportunities ?? [],

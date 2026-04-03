@@ -82,6 +82,85 @@ async function createContact(
   }
 }
 
+// ── Opportunity seeding ───────────────────────────────────────────────────────
+
+interface OpportunitySeed {
+  name: string;
+  companyName: string;
+  stage: string;
+  amountMicros: number;
+  closeDate: string;
+}
+
+const OPPORTUNITIES: OpportunitySeed[] = [
+  { name: "MoneyGram × Crossmint",   companyName: "MoneyGram",     stage: "PROPOSAL",   amountMicros: 2_400_000_000_000, closeDate: "2026-06-30" },
+  { name: "Wirex × Crossmint",       companyName: "Wirex",         stage: "MEETING",    amountMicros:   380_000_000_000, closeDate: "2026-05-15" },
+  { name: "Cacao Finance × Crossmint", companyName: "Cacao Finance", stage: "SCREENING", amountMicros:   180_000_000_000, closeDate: "2026-05-30" },
+  { name: "Kasi × Crossmint",        companyName: "Kasi",          stage: "NEW",        amountMicros:    62_000_000_000, closeDate: "2026-07-31" },
+  { name: "Toku × Crossmint",        companyName: "Toku",          stage: "PROPOSAL",   amountMicros:   950_000_000_000, closeDate: "2026-06-15" },
+  { name: "NeoVault × Crossmint",    companyName: "NeoVault",      stage: "MEETING",    amountMicros:   220_000_000_000, closeDate: "2026-05-31" },
+];
+
+async function lookupAllCompanies(): Promise<Map<string, string>> {
+  const apiUrl = process.env.TWENTY_API_URL;
+  const apiKey = process.env.TWENTY_API_KEY;
+  if (!apiUrl || !apiKey) throw new Error("Missing TWENTY_API_URL or TWENTY_API_KEY");
+
+  const res = await fetch(`${apiUrl}/rest/companies?first=100`, {
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+  });
+  if (!res.ok) throw new Error(`Failed to fetch companies: HTTP ${res.status}`);
+  const json = (await res.json()) as { data: { companies: { id: string; name: string }[] } };
+  const map = new Map<string, string>();
+  for (const c of json.data?.companies ?? []) {
+    map.set(c.name, c.id);
+  }
+  return map;
+}
+
+async function seedOpportunities(): Promise<void> {
+  const apiUrl = process.env.TWENTY_API_URL;
+  const apiKey = process.env.TWENTY_API_KEY;
+  if (!apiUrl || !apiKey) throw new Error("Missing TWENTY_API_URL or TWENTY_API_KEY");
+
+  console.log("\nSeeding opportunities…");
+  const companyMap = await lookupAllCompanies();
+
+  for (const opp of OPPORTUNITIES) {
+    const companyId = companyMap.get(opp.companyName);
+    if (!companyId) {
+      console.warn(`  Skipping "${opp.name}" — company "${opp.companyName}" not found in Twenty`);
+      continue;
+    }
+
+    const body: Record<string, unknown> = {
+      name: opp.name,
+      stage: opp.stage,
+      amount: { amountMicros: opp.amountMicros, currencyCode: "USD" },
+      closeDate: opp.closeDate,
+      companyId,
+    };
+
+    const res = await fetch(`${apiUrl}/rest/opportunities`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      // Ignore duplicates, warn on everything else
+      if (text.toUpperCase().includes("ALREADY") || text.toUpperCase().includes("UNIQUE")) {
+        console.log(`  Already exists: ${opp.name}`);
+      } else {
+        console.warn(`  Warning: could not create opportunity "${opp.name}": ${text}`);
+      }
+    } else {
+      console.log(`  Created opportunity: ${opp.name} (${opp.stage}, $${opp.amountMicros / 1_000_000} USD)`);
+    }
+  }
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function sleep(ms: number): Promise<void> {
@@ -120,7 +199,10 @@ async function main(): Promise<void> {
     await sleep(500);
   }
 
-  console.log(`\nDone. ${seeded}/${total} accounts seeded to Twenty.\n`);
+  console.log(`\nDone. ${seeded}/${total} accounts seeded to Twenty.`);
+
+  await seedOpportunities();
+  console.log("\nAll done.\n");
 }
 
 main().catch((err) => {
