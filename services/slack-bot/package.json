@@ -1,7 +1,7 @@
 {
-  "name": "@crossmint-crm/slack-bot",
+  "name": "@range-crm/slack-bot",
   "version": "0.1.0",
-  "description": "Slack bot for Crossmint CRM — planned next milestone",
+  "description": "Slack bot for Range CRM — planned next milestone",
   "private": true,
   "status": "planned",
   "milestone": "next",

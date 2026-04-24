@@ -1,7 +1,7 @@
 {
-  "name": "@crossmint-crm/schema",
+  "name": "@range-crm/schema",
   "version": "0.1.0",
-  "description": "Schema setup scripts for Crossmint CRM",
+  "description": "Schema setup scripts for Range CRM",
   "private": true,
   "scripts": {
     "setup": "ts-node twenty-setup.ts",

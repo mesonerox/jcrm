@@ -1,7 +1,7 @@
 {
-  "name": "@crossmint-crm/intelligence",
+  "name": "@range-crm/intelligence",
   "version": "0.1.0",
-  "description": "AI-powered account intelligence service for Crossmint CRM",
+  "description": "AI-powered account intelligence service for Range CRM",
   "private": true,
   "main": "dist/index.js",
   "scripts": {

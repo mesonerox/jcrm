@@ -97,9 +97,9 @@ function fullName(p: TwentyPerson): string {
 
 // ── Prompts ───────────────────────────────────────────────────────────────────
 
-const ICP_SYSTEM_PROMPT = `You are an ICP scoring agent for Crossmint — the leading enterprise Web3 infrastructure platform powering wallets, stablecoin payments, tokenization, and agentic finance for 40,000+ companies including MoneyGram, Western Union, Wirex, and Toku.
+const ICP_SYSTEM_PROMPT = `You are an ICP scoring agent for Range — the leading enterprise Web3 infrastructure platform powering wallets, stablecoin payments, tokenization, and agentic finance for 40,000+ companies including MoneyGram, Western Union, Wirex, and Toku.
 
-Score inbound leads against Crossmint's ICP:
+Score inbound leads against Range's ICP:
 - Tier A (80-100): Fintech building on stablecoin rails — remittance, payroll, neobank, cross-border payments. Enterprise with blockchain unit. AI agent platforms needing payment infrastructure.
 - Tier B (50-79): Gaming/NFT with wallet or payment needs. Mid-market fintech exploring crypto rails. Developer platforms needing tokenization.
 - Tier C (20-49): Early-stage developer, unclear use case, no financial component.
@@ -117,7 +117,7 @@ Respond ONLY with valid JSON:
 // ── MCP server ────────────────────────────────────────────────────────────────
 
 const server = new McpServer({
-  name: "crossmint-crm",
+  name: "range-crm",
   version: "1.0.0",
 });
 
@@ -125,7 +125,7 @@ const server = new McpServer({
 
 server.tool(
   "qualify_lead",
-  "Score an inbound lead against Crossmint's ICP. Returns tier (A/B/C/Disqualified), score 0-100, rationale, recommended next action, and personalized outreach angle.",
+  "Score an inbound lead against Range's ICP. Returns tier (A/B/C/Disqualified), score 0-100, rationale, recommended next action, and personalized outreach angle.",
   {
     companyName: z.string().describe("Name of the company"),
     industry: z.string().describe("Industry or vertical"),
@@ -275,7 +275,7 @@ server.tool(
               .join("\n")
           : "No contacts on file.";
 
-      const system = `You are a strategic account intelligence assistant for Crossmint — the leading enterprise Web3 infrastructure platform. You help account executives prepare for high-stakes meetings. Be concise, specific, and actionable. Write in crisp markdown.`;
+      const system = `You are a strategic account intelligence assistant for Range — the leading enterprise Web3 infrastructure platform. You help account executives prepare for high-stakes meetings. Be concise, specific, and actionable. Write in crisp markdown.`;
 
       const user = `Prepare a meeting brief for ${company.name}.
 
@@ -288,16 +288,16 @@ ${contactsCtx}
 Write the brief in this exact structure:
 
 ## Overview
-(2-3 sentences on who they are, what they do, and their relationship with Crossmint)
+(2-3 sentences on who they are, what they do, and their relationship with Range)
 
 ## Key Contacts
 (list each contact with name and email)
 
 ## Product Usage
-(summarise their current Crossmint footprint: wallets, chains, API volume, ARR)
+(summarise their current Range footprint: wallets, chains, API volume, ARR)
 
 ## Talking Points
-(3-5 bullet points — expansion opportunities, upcoming renewals, relevant Crossmint features)
+(3-5 bullet points — expansion opportunities, upcoming renewals, relevant Range features)
 
 ## Risks & Opportunities
 (health score context, churn signals, expansion potential)`;
@@ -323,7 +323,7 @@ Write the brief in this exact structure:
 
 server.tool(
   "draft_outreach",
-  "Draft a personalized first-touch outreach email for a prospect or existing account, referencing relevant Crossmint case studies based on their segment.",
+  "Draft a personalized first-touch outreach email for a prospect or existing account, referencing relevant Range case studies based on their segment.",
   {
     companyName: z.string().describe("Target company name"),
     angle: z
@@ -363,14 +363,14 @@ server.tool(
 
         if (seg === "STRATEGIC" || seg === "ENTERPRISE") return "MoneyGram (enterprise-scale stablecoin orchestration and wallet infrastructure)";
         if (notes.includes("payroll") || name.includes("pay")) return "Toku ($1B+ payroll on stablecoin rails)";
-        if (notes.includes("brazil") || notes.includes("remittance") || name.includes("remit")) return "Ruvo (USD-BRL remittance on Crossmint)";
+        if (notes.includes("brazil") || notes.includes("remittance") || name.includes("remit")) return "Ruvo (USD-BRL remittance on Range)";
         if (seg === "SMB" || notes.includes("neobank") || notes.includes("bank")) return "Wirex (smart wallet neobanking)";
-        return "Cacao Finance (YC-backed fintech scaling on Crossmint stablecoin rails)";
+        return "Cacao Finance (YC-backed fintech scaling on Range stablecoin rails)";
       })();
 
-      const system = `You are a strategic outreach writer for Crossmint — enterprise Web3 infrastructure for wallets, stablecoin payments, tokenization, and agentic finance.
+      const system = `You are a strategic outreach writer for Range — enterprise Web3 infrastructure for wallets, stablecoin payments, tokenization, and agentic finance.
 
-Crossmint's voice is: confident, technically literate, concise, outcome-focused. Never hype-y or generic. Reference specific outcomes (volume, wallets deployed, countries). One clear CTA per email.`;
+Range's voice is: confident, technically literate, concise, outcome-focused. Never hype-y or generic. Reference specific outcomes (volume, wallets deployed, countries). One clear CTA per email.`;
 
       const angleCtx = angle ? `\nSpecific angle to emphasise: ${angle}` : "";
 
@@ -391,7 +391,7 @@ Guidelines:
 - Open with a specific observation about their business, not a compliment
 - Reference the case study naturally (one sentence)
 - One concrete CTA (book a 20-min call)
-- Sign off as: Alex Chen, Head of Enterprise Partnerships, Crossmint`;
+- Sign off as: Alex Chen, Head of Enterprise Partnerships, Range`;
 
       const text = await callClaude(system, user, 600);
 
@@ -399,7 +399,7 @@ Guidelines:
       const subjectMatch = text.match(/^Subject:\s*(.+)/im);
       const subject = subjectMatch
         ? subjectMatch[1].trim()
-        : `Crossmint infrastructure for ${companyName}`;
+        : `Range infrastructure for ${companyName}`;
       const body = text
         .replace(/^Subject:\s*.+\n?/im, "")
         .trim();
@@ -432,7 +432,7 @@ async function main(): Promise<void> {
   const transport = new StdioServerTransport();
   await server.connect(transport);
   // MCP servers communicate over stdio — do not log to stdout
-  process.stderr.write("Crossmint CRM MCP server running on stdio\n");
+  process.stderr.write("Range CRM MCP server running on stdio\n");
 }
 
 main().catch((err) => {

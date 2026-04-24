@@ -1,14 +1,14 @@
-# Crossmint CRM
+# Range CRM
 
-**An AI-native revenue intelligence system built specifically for Crossmint's BD motion.**
+**An AI-native revenue intelligence system built specifically for Range's BD motion.**
 
-![Built for Crossmint](https://img.shields.io/badge/Built%20for-Crossmint-6366f1?style=flat-square)
+![Built for Range](https://img.shields.io/badge/Built%20for-Range-6366f1?style=flat-square)
 ![Powered by Claude](https://img.shields.io/badge/Powered%20by-Claude%20Sonnet%204.6-orange?style=flat-square)
 ![n8n Automated](https://img.shields.io/badge/n8n-5%20Workflows%20Active-ef5533?style=flat-square)
 ![Live & Functional](https://img.shields.io/badge/Status-Live%20%26%20Functional-22c55e?style=flat-square)
 ![Open Source Stack](https://img.shields.io/badge/Stack-100%25%20Open%20Source-3b82f6?style=flat-square)
 
-This is a purpose-built revenue intelligence system for Crossmint's go-to-market team — not a CRM configuration, but a full-stack AI system designed around Crossmint's actual product surface, ICP, and operational reality. This statement maps directly to three concrete engineering problems: an inbound qualification bottleneck that lets leads go cold, a structurally absent outbound motion with no personalization infrastructure, and a BD operations layer that doesn't yet have AI as a force multiplier.
+This is a purpose-built revenue intelligence system for Range's go-to-market team — not a CRM configuration, but a full-stack AI system designed around Range's actual product surface, ICP, and operational reality. This statement maps directly to three concrete engineering problems: an inbound qualification bottleneck that lets leads go cold, a structurally absent outbound motion with no personalization infrastructure, and a BD operations layer that doesn't yet have AI as a force multiplier.
 
 ![BD Intelligence Dashboard](https://github.com/user-attachments/assets/e2fea2a6-738f-4115-98fd-be5e7e889ff8)
 
@@ -22,9 +22,9 @@ This is a purpose-built revenue intelligence system for Crossmint's go-to-market
 | **Zero outbound motion** | No systematic prospecting, no personalization at scale | Automated sequence engine with ICP-targeted, Claude-written emails |
 | **Ops bottleneck** | BD lead has no right-hand for tooling or reporting | Autonomous agent layer handles tier-1 ops via natural language |
 
-Off-the-shelf CRMs — HubSpot, Salesforce — solve the wrong problem. They're built for generic B2B sales motions: contacts, deals, pipelines. They have no concept of a `WalletDeployment`, a `Chain`, or an `Integration`. They can't model the difference between a fintech on stablecoin rails and a gaming company experimenting with NFTs. You end up shoe-horning Crossmint's product surface into "Custom Field 1" and calling it a day. The data model breaks. The reporting is meaningless. And you've spent $500/month on a system that doesn't actually know what Crossmint sells.
+Off-the-shelf CRMs — HubSpot, Salesforce — solve the wrong problem. They're built for generic B2B sales motions: contacts, deals, pipelines. They have no concept of a `WalletDeployment`, a `Chain`, or an `Integration`. They can't model the difference between a fintech on stablecoin rails and a gaming company experimenting with NFTs. You end up shoe-horning Range's product surface into "Custom Field 1" and calling it a day. The data model breaks. The reporting is meaningless. And you've spent $500/month on a system that doesn't actually know what Range sells.
 
-The deeper issue is AI integration. HubSpot's "AI features" are bolt-ons — summary generators, email subject line suggestions — that have no access to your actual business logic, ICP scoring rubric, or historical deal data. They can't qualify a lead against Crossmint's specific criteria (stablecoin rails? payroll? cross-border remittance?) because they don't know what those criteria are. This system encodes Crossmint's ICP as a first-class scoring model, puts Claude at the center of every workflow, and builds the data model around Crossmint's actual product — wallets, chains, integrations, health scores. The result is a CRM that understands the business, not one that has to be taught to approximate it.
+The deeper issue is AI integration. HubSpot's "AI features" are bolt-ons — summary generators, email subject line suggestions — that have no access to your actual business logic, ICP scoring rubric, or historical deal data. They can't qualify a lead against Range's specific criteria (stablecoin rails? payroll? cross-border remittance?) because they don't know what those criteria are. This system encodes Range's ICP as a first-class scoring model, puts Claude at the center of every workflow, and builds the data model around Range's actual product — wallets, chains, integrations, health scores. The result is a CRM that understands the business, not one that has to be taught to approximate it.
 
 ---
 
@@ -32,11 +32,11 @@ The deeper issue is AI integration. HubSpot's "AI features" are bolt-ons — sum
 
 | Dimension | This Stack | HubSpot / Salesforce |
 |-----------|-----------|----------------------|
-| **Data model** | Fully custom — `WalletDeployment`, `Chain`, `Integration` objects match Crossmint's actual product surface | Generic contact/deal model, no crypto-native objects |
+| **Data model** | Fully custom — `WalletDeployment`, `Chain`, `Integration` objects match Range's actual product surface | Generic contact/deal model, no crypto-native objects |
 | **AI integration** | Native MCP tools + Anthropic SDK, Claude in every workflow | Bolt-on AI features, no custom scoring logic |
 | **Cost at 10 users** | ~$25–40/mo (infra only) | HubSpot Sales Pro: ~$500/mo |
 | **Extensibility** | Open-source, full code ownership, no vendor lock-in | Vendor lock-in, limited API access |
-| **Signal to Crossmint** | Shows GTM engineering depth | Shows Salesforce admin skills |
+| **Signal to Range** | Shows GTM engineering depth | Shows Salesforce admin skills |
 
 ---
 
@@ -47,7 +47,7 @@ The deeper issue is AI integration. HubSpot's "AI features" are bolt-ons — sum
 - **Twenty CRM** self-hosted via Docker on `localhost:3000` — system of record with custom schema
 - **Custom objects** created programmatically via Twenty's GraphQL metadata API: `InboundLead`, `Chain`, `WalletDeployment`
 - **Custom fields** on `Company` for account health: `healthScore`, `churnRisk`, `monthlyApiCalls`, `activeWalletCount`, `estimatedARR`, `segment`, `expansionPotential`, `icpNotes`
-- **20 mock accounts** seeded — RemitFlow, NeoVault, MoneyGram, PixelVault, StackBank, and 15 others representing Crossmint's actual ICP distribution
+- **20 mock accounts** seeded — RemitFlow, NeoVault, MoneyGram, PixelVault, StackBank, and 15 others representing Range's actual ICP distribution
 - **BD Intelligence Dashboard** (Next.js, `localhost:3001`) embedded natively inside Twenty's UI via script injection — collapsible nav group with Dashboard, Leads, Pipeline, Accounts sub-pages, no second sidebar, seamless iframe integration with matching dark theme
 - **MCP Server** with 4 tools (`qualify_lead`, `get_account_health`, `prep_meeting_brief`, `draft_outreach`) registered with Claude Desktop — fully operational, testable via natural language today
 - **5 n8n workflows** imported and active at `localhost:5678` — inbound qualification, outbound sequences, account health monitoring, deal stage automation, weekly digest
@@ -57,7 +57,7 @@ The deeper issue is AI integration. HubSpot's "AI features" are bolt-ons — sum
 
 The system as it stands is a working foundation. The full vision is a completely autonomous revenue ops layer.
 
-Every inbound lead — regardless of source, volume, or time of day — is qualified by Claude within 60 seconds of form submission. The lead is scored 0–100 against Crossmint's ICP, tier-classified, routed to the right AE, and a first-touch email is drafted and queued, all before anyone opens their laptop. The Slack notification in `#crm-inbound` includes the score, the rationale, and an [Assign to AE] button. The BD team's job is to review and approve, not to process.
+Every inbound lead — regardless of source, volume, or time of day — is qualified by Claude within 60 seconds of form submission. The lead is scored 0–100 against Range's ICP, tier-classified, routed to the right AE, and a first-touch email is drafted and queued, all before anyone opens their laptop. The Slack notification in `#crm-inbound` includes the score, the rationale, and an [Assign to AE] button. The BD team's job is to review and approve, not to process.
 
 The BD Intelligence Dashboard becomes the single pane of glass for the entire revenue motion: live funnel health, account health signals with churn risk flags, today's action queue ranked by AI-assessed urgency, hot accounts with intent signals, channel performance, and SQL quality by source. Account health monitoring runs continuously in the background — a health score drop below 60 combined with 14+ days of inactivity triggers an automated alert and schedules a check-in task. An API call spike of +200% triggers an expansion signal and queues an upsell draft. Meeting briefs are auto-generated 30 minutes before every calendar event, pulling the full account context from Twenty and surfacing the three most important talking points. The MCP server gives every operator — from the BD lead to the CEO — natural language access to the CRM: ask it anything about any account and get a structured, accurate answer in seconds. The Slack bot delivers weekly pipeline digests, deal close notifications, lead scoring alerts, and account health warnings directly in-channel, meeting the team where they already work.
 
@@ -67,7 +67,7 @@ The BD Intelligence Dashboard becomes the single pane of glass for the entire re
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     CROSSMINT CRM STACK                          │
+│                     RANGE CRM STACK                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                   │
 │  ┌─────────────────────────────────────────────────────────┐    │
@@ -203,7 +203,7 @@ Added to the standard `Company` object via metadata API:
 
 ### ICP Scoring Model
 
-Crossmint's ICP encoded as a first-class scoring rubric — not a tag, not a custom field, but a prompt-level specification that Claude applies to every lead:
+Range's ICP encoded as a first-class scoring rubric — not a tag, not a custom field, but a prompt-level specification that Claude applies to every lead:
 
 | Tier | Score | Profile |
 |------|-------|---------|
@@ -220,7 +220,7 @@ The MCP server runs over stdio transport and is registered with Claude Desktop. 
 
 #### `qualify_lead`
 
-Scores an inbound lead against Crossmint's ICP and writes the result to Twenty.
+Scores an inbound lead against Range's ICP and writes the result to Twenty.
 
 **Input schema:**
 ```typescript
@@ -232,17 +232,17 @@ Scores an inbound lead against Crossmint's ICP and writes the result to Twenty.
 }
 ```
 
-**What Claude does:** Applies Crossmint's ICP scoring rubric, assigns a 0–100 score and tier, generates a rationale and expansion flag analysis, and writes a personalized opening angle for the first outreach touch.
+**What Claude does:** Applies Range's ICP scoring rubric, assigns a 0–100 score and tier, generates a rationale and expansion flag analysis, and writes a personalized opening angle for the first outreach touch.
 
 **Example output:**
 ```json
 {
   "score": 92,
   "tier": "A",
-  "rationale": "Remittance fintech on USD→BRL corridor — direct fit for Crossmint's stablecoin payment rails. Financial services regulatory context signals enterprise-grade requirements.",
+  "rationale": "Remittance fintech on USD→BRL corridor — direct fit for Range's stablecoin payment rails. Financial services regulatory context signals enterprise-grade requirements.",
   "nextAction": "Book Demo",
   "expansionFlags": ["Agentic Payments fit", "Payroll expansion path"],
-  "personalization": "Lead with the Ruvo case study — same corridor, same regulatory environment, live on Crossmint rails."
+  "personalization": "Lead with the Ruvo case study — same corridor, same regulatory environment, live on Range rails."
 }
 ```
 
@@ -286,7 +286,7 @@ Generates a five-section meeting brief by pulling the full account context from 
 
 #### `draft_outreach`
 
-Writes a personalized first-touch email, automatically selecting the most relevant Crossmint case study by company segment.
+Writes a personalized first-touch email, automatically selecting the most relevant Range case study by company segment.
 
 **Input schema:**
 ```typescript
@@ -304,9 +304,9 @@ Writes a personalized first-touch email, automatically selecting the most releva
 |---------|-----------|
 | Enterprise | MoneyGram — stablecoin orchestration at scale |
 | Payroll | Toku — $1B+ payroll on stablecoin rails |
-| Remittance | Ruvo — USD→BRL on Crossmint |
+| Remittance | Ruvo — USD→BRL on Range |
 | Neobank | Wirex — smart wallet infrastructure |
-| Default | Cacao Finance — YC-backed fintech on Crossmint rails |
+| Default | Cacao Finance — YC-backed fintech on Range rails |
 
 **Demo:** `draft outreach to Western Union, angle: stablecoin orchestration at scale`
 
@@ -322,7 +322,7 @@ Three commands. Three pain points from the Head of BD, addressed directly.
 qualify this lead: Ana Lima, Head of Payments at Ruvo, building USD→BRL remittance in Brazil
 ```
 
-Expected: Score 90+, Tier A, rationale citing remittance corridor fit and Crossmint's stablecoin rails, next action "Book Demo", personalization angle referencing the Ruvo case study. `InboundLead` record created in Twenty automatically. Total time: ~8 seconds.
+Expected: Score 90+, Tier A, rationale citing remittance corridor fit and Range's stablecoin rails, next action "Book Demo", personalization angle referencing the Ruvo case study. `InboundLead` record created in Twenty automatically. Total time: ~8 seconds.
 
 **2. Zero outbound motion → `draft_outreach`**
 
@@ -474,7 +474,7 @@ Five workflows, all imported and active at `localhost:5678`. Workflows are in `n
 ## Repository Structure
 
 ```
-crossmint-crm/
+range-crm/
 ├── docker-compose.yml              # Full stack: Twenty, n8n, Postgres, Redis
 ├── init-db.sh                      # Postgres initialization
 ├── railway.toml                    # Railway deployment config
@@ -579,9 +579,9 @@ Add to `~/.claude/mcp_servers.json` (or register via Claude Desktop → Settings
 ```json
 {
   "mcpServers": {
-    "crossmint-crm": {
+    "range-crm": {
       "command": "node",
-      "args": ["/path/to/crossmint-crm/services/mcp-server/dist/index.js"],
+      "args": ["/path/to/range-crm/services/mcp-server/dist/index.js"],
       "env": {
         "TWENTY_API_URL": "http://localhost:3000",
         "TWENTY_API_KEY": "your_key",
@@ -597,7 +597,7 @@ Add to `~/.claude/mcp_servers.json` (or register via Claude Desktop → Settings
 The dashboard is embedded in Twenty's UI via `twenty-bd-intelligence.user.js`, injected into Twenty's Docker container at startup. After any container restart:
 
 ```bash
-docker cp ~/crossmint-crm/twenty-bd-intelligence.user.js crossmint-crm-twenty-server-1:/app/bd-intelligence.js
+docker cp ~/range-crm/twenty-bd-intelligence.user.js range-crm-twenty-server-1:/app/bd-intelligence.js
 ```
 
 The script injects a collapsible "BD Intelligence" nav group into Twenty's sidebar, renders the Next.js app in a fixed iframe overlay that matches Twenty's dark theme, and handles navigation between sub-pages without any visible context switch.
@@ -606,8 +606,8 @@ The script injects a collapsible "BD Intelligence" nav group into Twenty's sideb
 
 ## About This Project
 
-This was built as a portfolio asset to demonstrate GTM engineering depth and AI tooling proficiency directly to Crossmint's BD team — not as a spec document, but as a working system. The goal was to build the exact tool Crossmint needs, then show it during the application process itself. The three-minute demo above is designed to address the three specific pain points articulated by the Head of BD, using live data and live AI responses.
+This was built as a portfolio asset to demonstrate GTM engineering depth and AI tooling proficiency directly to Range's BD team — not as a spec document, but as a working system. The goal was to build the exact tool Range needs, then show it during the application process itself. The three-minute demo above is designed to address the three specific pain points articulated by the Head of BD, using live data and live AI responses.
 
-All Crossmint account data in the system is mock data derived from publicly available information — Crossmint's blog posts, press releases, partner announcements, and case studies (MoneyGram, Toku, Wirex, Cacao Finance, Ruvo). No proprietary data was used. The CRM backend is built on [Twenty](https://github.com/twentyhq/twenty) — a modern open-source CRM with a strong GraphQL metadata API, a clean data model, and active development — extended with Crossmint-specific objects, AI tooling, and a purpose-built intelligence dashboard.
+All Range account data in the system is mock data derived from publicly available information — Range's blog posts, press releases, partner announcements, and case studies (MoneyGram, Toku, Wirex, Cacao Finance, Ruvo). No proprietary data was used. The CRM backend is built on [Twenty](https://github.com/twentyhq/twenty) — a modern open-source CRM with a strong GraphQL metadata API, a clean data model, and active development — extended with Range-specific objects, AI tooling, and a purpose-built intelligence dashboard.
 
-The architecture is deliberately over-engineered relative to immediate needs. The point isn't that Crossmint should run this exact stack on day one — it's that the person building it understands the full surface of the problem: data modeling, AI integration, workflow automation, CRM extensibility, and operator experience. The SDR Manager role is a GTM leadership position. This is what GTM leadership looks like when it ships code.
+The architecture is deliberately over-engineered relative to immediate needs. The point isn't that Range should run this exact stack on day one — it's that the person building it understands the full surface of the problem: data modeling, AI integration, workflow automation, CRM extensibility, and operator experience. The SDR Manager role is a GTM leadership position. This is what GTM leadership looks like when it ships code.

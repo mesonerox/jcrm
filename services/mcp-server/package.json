@@ -1,7 +1,7 @@
 {
-  "name": "@crossmint-crm/mcp-server",
+  "name": "@range-crm/mcp-server",
   "version": "0.1.0",
-  "description": "MCP server exposing Crossmint CRM tools to Claude",
+  "description": "MCP server exposing Range CRM tools to Claude",
   "private": true,
   "main": "dist/index.js",
   "scripts": {

@@ -1,12 +1,12 @@
-# Crossmint CRM — MCP Server
+# Range CRM — MCP Server
 
-An [MCP (Model Context Protocol)](https://modelcontextprotocol.io) server that exposes Crossmint CRM intelligence tools to Claude and other AI agents.
+An [MCP (Model Context Protocol)](https://modelcontextprotocol.io) server that exposes Range CRM intelligence tools to Claude and other AI agents.
 
 ## Tools
 
 | Tool | Description |
 |---|---|
-| `qualify_lead` | Score an inbound lead against Crossmint's ICP. Returns tier, score, rationale, next action. |
+| `qualify_lead` | Score an inbound lead against Range's ICP. Returns tier, score, rationale, next action. |
 | `get_account_health` | Fetch live health metrics for a company from Twenty CRM. |
 | `prep_meeting_brief` | Generate a structured meeting brief with contacts, product usage, and talking points. |
 | `draft_outreach` | Draft a personalized first-touch email with segment-matched case studies. |
@@ -52,7 +52,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "crossmint-crm": {
+    "range-crm": {
       "command": "node",
       "args": ["/absolute/path/to/services/mcp-server/dist/index.js"],
       "env": {
@@ -70,7 +70,7 @@ Or with `ts-node` during development:
 ```json
 {
   "mcpServers": {
-    "crossmint-crm": {
+    "range-crm": {
       "command": "npx",
       "args": ["ts-node", "/absolute/path/to/services/mcp-server/src/index.ts"],
       "env": {
